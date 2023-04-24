@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Log In{% endblock %}
+{% block login_active %}active{% endblock %}
+
+{% block body %}
+     <br><br>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>My Followers
+                    <a href="{% url 'users:index' %}">&emsp13;&emsp14;&emsp14;Home</h3></a>
+                    <hr>
+                    {% for follower in my_followers %}
+                        <ul>
+                            <li>{{ follower.follower.first_name }} {{ follower.follower.last_name }}&nbsp;<a
+                                    href="{% url 'users:follower_profile' follower_id=follower.id %}">View Profile</a>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

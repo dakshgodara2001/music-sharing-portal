@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Log In{% endblock %}
+{% block login_active %}active{% endblock %}
+
+{% block body %}
+ <br><br>
+<div class="container-fluid">
+
+  <div class="row">
+      <div class="col-sm-12 col-md-6">
+          <div class="panel panel-default">
+              <div class="panel-body">
+                <h3>Follow Users</h3>
+                  {% for notfriend in notfriends %}
+                  <ul>
+                    <li>{{notfriend.first_name}} {{notfriend.last_name}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'users:follow' followee_id=notfriend.id %}">Follow</a></li>
+                  </ul>
+                  {% endfor %}
+                <hr>
+                  <h3>Unfollow Users</h3>
+                  {% for friend in friends %}
+                  <ul>
+                    <li>{{friend.first_name}} {{friend.last_name}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'users:unfollow' followee_id=friend.id %}">Unfollow</a></li>
+                  </ul>
+                {% endfor %}
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+  
+
+{% endblock %}
+

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block title %}Log In{% endblock %}
+{% block login_active %}active{% endblock %}
+
+{% block body %}
+     <br><br>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>{{ request.session.username }}'s Profile</h3>
+                        <a href="{% url 'users:edit_profile' %}">Edit Profile</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'users:index' %}">Home</a>
+                        <hr>
+                        <br>
+                        <p>
+                            <b>First Name:</b> {{ request.session.first_name }}<br><br>
+                            <b>Last Name:</b> {{ request.session.last_name }} <br><br>
+                            <b>Email:</b> {{ request.session.email }} <br><br>
+                            <b>Followers:</b> {{ followers_count }} <br><br>
+                            <b>Following:</b> {{ following_count }} <br><br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# User's Activity on Site #}
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>{{ request.session.username }}'s Activity</h3>&nbsp;
+                        <a href="{% url 'users:index' %}">Home</a>
+                        <a href="{% url 'users:my_followers' %}">&emsp14;&emsp14;&emsp14;My Followers</a>
+                        <hr>
+                        <table class="table">
+                            <tbody>
+
+                            {# private album section#}
+                            <tr>
+                                <td colspan="2"><h4>Private Albums : {{ private_albums | length }} <br></h4></td>
+                            </tr>
+
+                            <tr>
+                                {% for album in private_albums %}
+                                    <td><h5>{{ album.album_title }} :- <br></h5></td>
+                                    {% if album.total_songs ==  null %}
+                                        <td><h5> 0 song(s) <br></h5></td>
+                                    {% else %}
+                                        <td><h5>{{ album.total_songs }} song(s) <br></h5></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+                            {# Public album section#}
+                            <tr>
+                                <td colspan="2"><h4>Public Albums : {{ public_albums | length }} <br></h4></td>
+                            </tr>
+
+                            <tr>
+                                {% for album in public_albums %}
+                                    <td><h5>{{ album.album_title }} :- <br></h5></td>
+                                    {% if album.total_songs == null %}
+                                        <td><h5> 0 song(s) <br></h5></td>
+                                    {% else %}
+                                        <td><h5>{{ album.total_songs }} song(s) <br></h5></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+
+                            {# Shared Album section#}
+                            <tr>
+                                <td colspan="2"><h4>Shared Albums : {{ shared_albums | length }} <br></h4></td>
+                            </tr>
+
+                            <tr>
+                                {% for album in shared_albums %}
+                                    <td><h5>{{ album.album_title }} :- <br></h5></td>
+                                    {% if album.total_songs == null %}
+                                        <td><h5> 0 song(s) <br></h5></td>
+                                    {% else %}
+                                        <td><h5>{{ album.total_songs }} song(s) <br></h5></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+                            {# Received Albums#}
+                            <tr>
+                                <td colspan="2"><h4>Received Albums : {{ shared_albums | length }} <br></h4></td>
+                            </tr>
+
+                            <tr>
+                                {% for album in received_albums %}
+                                    <td><h5>{{ album.album_title }} :- <br></h5></td>
+                                    {% if album.total_songs == null %}
+                                        <td><h5> 0 song(s) <br></h5></td>
+                                    {% else %}
+                                        <td><h5>{{ album.total_songs }} song(s) <br></h5></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+                            {# Friends Albums#}
+                            <tr>
+                                <td colspan="2"><h4>Friends Albums : {{ friends_albums | length }} <br></h4></td>
+                            </tr>
+
+                            <tr>
+                                {% for album in friends_albums %}
+                                    <td><h5>{{ album.album_title }} :- <br></h5></td>
+                                    {% if album.total_songs == null %}
+                                        <td><h5> 0 song(s) <br></h5></td>
+                                    {% else %}
+                                        <td><h5>{{ album.total_songs }} song(s) <br></h5></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Log In{% endblock %}
+{% block login_active %}active{% endblock %}
+
+{% block body %}
+    <br><br>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        <h3>Users</h3>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if not unshared_users %}
+                    <tr>
+
+                        <td>
+                            <h4>
+                                You have Shared it with all the users.
+                            </h4>
+                        </td>
+
+                    </tr>
+                {% endif %}
+
+                {% for unshared_user in unshared_users %}
+                    <tr>
+
+                        <td>
+                            {{ unshared_user }}
+                            <a href="{% url 'music:share' album_id unshared_user %}">Share</a>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        <h3>Already Shared Users</h3>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if not shared_users %}
+                    <tr>
+
+                        <td>
+                            <h4>
+                                You haven't shared this album with any user.
+                            </h4>
+                        </td>
+
+                    </tr>
+                {% endif %}
+                {% for shared_user in shared_users %}
+                    <tr>
+
+                        <td>
+                            {{ shared_user }}
+                            <a href="{% url 'music:unshare' album_id shared_user %}">Unshare</a>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}
+

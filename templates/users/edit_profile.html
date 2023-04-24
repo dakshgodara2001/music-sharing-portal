@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Log In{% endblock %}
+{% block login_active %}active{% endblock %}
+
+{% block body %}
+ <br><br>
+<div class="row">
+  <div class="col-sm-12 col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-body">
+            
+            <h3>Edit Your Profile</h3>
+            <a href="{% url 'users:profile' %}">Back to Profile</a>
+            <hr>
+            {% for m in messages %}
+              <p>{{m}}</p>
+            {% endfor %}
+            <br>
+              <form action="{% url 'users:update_profile' %}" method="post">
+                {% csrf_token %}
+                First Name: <input type="text" name="first_name" placeholder="{{request.session.first_name}}"><br><br>
+                Last Name: <input type="text" name="last_name" placeholder="{{request.session.last_name}}"><br><br>
+                Password: <input type="password" name="password"><br><br>
+                Confirm Password: <input type="password" name="confirm_password"><br><br>
+                <input style="margin:10px; font-size:13pt;" type="submit" name="edit" value="Update Profile">
+              </form>           
+          </div>
+      </div>
+  </div>
+</div>
+
+</div>
+  
+{% endblock %}
+

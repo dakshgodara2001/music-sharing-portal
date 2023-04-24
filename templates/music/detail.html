@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block myscss %}
+
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+
+{% endblock %}
+
+{% block title %}{{ album }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+
+{% block body %}
+    <br><br>
+    <div class="container-fluid songs-container">
+
+        <div class="row">
+
+            <!-- Left Album Info -->
+            <div class="col-sm-4 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="{% url 'music:detail' album.id %}">
+                            {% if album.album_logo %}
+                                <img src="{{ album.album_logo.url }}" class="img-responsive">
+                            {% else %}
+                                <h3>No image to display</h3>
+                            {% endif %}
+                        </a>
+                        <h1>{{ album.album_title }} <small>{{ album.genre }}</small></h1>
+                        <h2>{{ album.artist }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Song Info -->
+            <div class="col-sm-8 col-md-9">
+
+                <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                    <li role="presentation" class="active"><a href="{% url 'music:detail' album.id %}">View All</a></li>
+                    <li role="presentation"><a href="{% url 'music:create_song' album.id %}">Add New Song</a></li>
+                    <pre class="col-sm-4 col-md-4"><li role="presentation"><h4>            Total songs : {{ album.total_songs }}</h4></li></pre>
+                    <div class="col-md-2"><li >
+                        <label>Is this a private album ?</label>
+                        {% if album.is_private %}
+                            <label class="switch col-md-offset-4">
+                            <input data-href="{% url 'music:toggle' album.id %}" type="checkbox" id="checkbox" checked onclick="myFunction()">
+                            <span class="slider round"></span>
+                            </label>
+                        {% else %}
+                            <label class="switch">
+                            <input data-href="{% url 'music:toggle' album.id %}" type="checkbox" id="checkbox" value="{{ album.is_private }}" onclick="myFunction()">
+                            <span class="slider round"></span>
+                            </label>
+                        {% endif %}
+                    </li>
+                    </div>
+                </ul>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <h3>All Songs</h3>
+
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Audio File</th>
+                                <th>Favorite</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for song in album.song_set.all %}
+                                <tr>
+                                    <td>{{ song.song_title }}</td>
+                                    <td>
+                                        <a target="_blank" href="{{ song.audio_file.url }}">
+                                            <button type="button" class="btn btn-success btn-xs">
+                                                <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                            </button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span
+                                                class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                    </td>
+                                    <td>
+                                        <form action="{% url 'music:delete_song' album.id song.id %}" method="post"
+                                              style="display: inline;">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="song_id" value="{{ song.id }}"/>
+                                            <button type="submit" class="btn btn-danger btn-xs">
+                                                <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

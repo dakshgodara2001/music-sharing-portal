@@ -1,0 +1,85 @@
+body {
+    
+    background: url("images/background.jpg");
+    height: 100%;
+    /*background: none;*/
+
+    /* Center and scale the image nicely */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+} 
+
+html {
+    height: 100%;
+}
+
+ul.errorlist {
+    padding-left: 0;
+}
+
+ul.errorlist > li {
+    list-style: none;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+
+.glyphicon-star {
+    color: #CCCCCC;
+    font-size: 16px;
+}
+
+.glyphicon-star.active {
+    color: #FDB230;
+}
+
+/* importing diff */
+
+.content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.private-area {
+  margin: 0 0 3px 0;
+}
+
+/*h1{*/
+/*    color: white;*/
+/*}*/
+
+/*h2{*/
+/*    color: white;*/
+/*}*/
+/*h3{*/
+/*    color: white;*/
+/*}*/
+/*h4{*/
+/*    color: white;*/
+/*}*/
+/*h5{*/
+/*    color: white;*/
+/*}*/
+/*h6{*/
+/*    color: white;*/
+/*}*/
+.span-visitor{
+    font-size: 17px;
+    color: white;
+}
+/*p{*/
+/*    color: white;*/
+/*}*/
+
+.header-blue{
+    background-color: #08192d;
+}
