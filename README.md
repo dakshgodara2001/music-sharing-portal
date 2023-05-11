@@ -1,4 +1,4 @@
-# music-sharing-portal
+# Music Sharing Portal
 
 Music sharing portal
 
